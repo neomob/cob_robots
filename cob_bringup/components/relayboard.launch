@@ -4,8 +4,7 @@
 	<arg name="pkg_hardware_config" default="$(find cob_hardware_config)"/>
 
 	<!-- start relayboard node -->
-	<node name="relayboard_controller" pkg="cob_relayboard" type="cob_relayboard_node" respawn="false" output="screen">
-		<rosparam command="load" file="$(arg pkg_hardware_config)/$(env ROBOT)/config/relayboard.yaml"/>
-	</node>
+	<rosparam command="load" ns="relayboard" file="$(arg pkg_hardware_config)/$(env ROBOT)/config/relayboard.yaml"/>
+	<node name="relayboard_node" ns="relayboard" pkg="cob_relayboard" type="neo_relayboard_node" respawn="false" output="screen"/>
 
 </launch>

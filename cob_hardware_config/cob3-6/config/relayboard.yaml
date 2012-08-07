@@ -5,5 +5,10 @@ ComPort: /dev/ttyRelais
 relayboard_timeout: 2.0
 relayboard_voltage_offset: 2.6
 
-#Define the version of the protocol used by the Relayboard
+#Define the version of the protocol used by the Relayboard (the type of lcd interface)
 protocol_version: 2
+
+voltage_min: 47
+voltage_max: 56
+voltage_nominal: 48
+charge_nominal: 30
