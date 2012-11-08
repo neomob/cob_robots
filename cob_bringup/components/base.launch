@@ -2,14 +2,16 @@
 <launch>
 
 	<arg name="sim" default="false" />
+	<arg name="pkg_hardware_config" default="$(find cob_hardware_config)"/>
 	<arg name="namespace" default="base_controller"/>
 	<arg name="topicJointName" default="/joint_states"/>
 	<arg name="topicJointCmd" default="joint_command"/>
 	<arg name="topicOdom" default="odometry"/>
 	<arg name="topicCmdVel" default="command" />
 	<arg name="topicEmergencyState" default="/emergency_stop_state" />
-	<arg name="iniDir" default="$(find cob_hardware_config)/$(env ROBOT)/config/base/" />
-	<arg name="configBaseDriveChain" default="$(find cob_hardware_config)/$(env ROBOT)/config"/>
+	<arg name="iniDir" default="$(arg pkg_hardware_config)/$(env ROBOT)/config/base/" />
+	<arg name="configBaseDriveChain" default="$(arg pkg_hardware_config)/$(env ROBOT)/config"/>
+
 
 	<group ns="$(arg namespace)">
 		
@@ -31,6 +33,15 @@
 			<arg name="topicJointCmd" value="$(arg topicJointCmd)"/>
 			<arg name="topicEmergencyState" value="/emergency_stop_state" />
 		</include>
+
+		<!-- start cob_base_velocity_smoother-->
+		<rosparam ns="cob_base_velocity_smoother" file="$(arg pkg_hardware_config)/$(env ROBOT)/config/base_velocity_smoother_params.yaml" command="load"/>
+		<node ns="cob_base_velocity_smoother" pkg="cob_base_velocity_smoother" type="cob_base_velocity_smoother" name="cob_base_velocity_smoother" respawn="false" output="screen">
+
+			<remap from="input" to="/base_controller/command"/>
+			<remap from="output" to="/base_controller/command_direct"/>
+
+		</node>
 	</group>
 
 </launch>

@@ -1,5 +1,5 @@
 #drive
-AutoInit: true
+AutoInit: true 
 CheckJointNames: true
 cycleRate: 75
 numberOfMotors: 8 #for each motor a 'drive*:' configuration section must exist.
